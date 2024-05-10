@@ -125,10 +125,23 @@ while run:
     screen.blit(bpm_text2, (370, HEIGHT - 100))
     bpm_add_rect = pygame.draw.rect(screen, gray, [510, HEIGHT - 150, 48, 48], 0, 5)
     bpm_sub_rect = pygame.draw.rect(screen, gray,  [510, HEIGHT - 100, 48, 48], 0, 5)
-    add_text = medium_font.render('+5', True, white)
-    sub_text = medium_font.render('-5', True, white)
-    screen.blit(add_text, (520, HEIGHT - 140))
-    screen.blit(sub_text, (520, HEIGHT - 90))
+    bpm_add_text = medium_font.render('+5', True, white)
+    bpm_sub_text = medium_font.render('-5', True, white)
+    screen.blit(bpm_add_text, (520, HEIGHT - 140))
+    screen.blit(bpm_sub_text, (520, HEIGHT - 90))
+
+    # Beat
+    beats_rect = pygame.draw.rect(screen, gray, [600, HEIGHT - 150, 200, 100], 5, 5)
+    beats_text = medium_font.render('Beats In Loop', True, white)
+    screen.blit(beats_text, (618, HEIGHT - 130))
+    beats_text2 = label_font.render(f'{beats}', True, white)
+    screen.blit(beats_text2, (680, HEIGHT - 100))
+    beats_add_rect = pygame.draw.rect(screen, gray, [810, HEIGHT - 150, 48, 48], 0, 5)
+    beats_sub_rect = pygame.draw.rect(screen, gray,  [810, HEIGHT - 100, 48, 48], 0, 5)
+    beats_add_text = medium_font.render('+1', True, white)
+    beats_sub_text = medium_font.render('-1', True, white)
+    screen.blit(beats_add_text, (820, HEIGHT - 140))
+    screen.blit(beats_sub_text, (820, HEIGHT - 90))
 
     if beat_changed:
         play_notes()
@@ -142,7 +155,7 @@ while run:
                 if boxes[i][0].collidepoint(event.pos):
                     coords = boxes[i][1]
                     clicked[coords[1]][coords[0]] *= -1
-        if event.type == pygame.MOUSEBUTTONUP:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if play_pause.collidepoint(event.pos):
                 if playing:
                     playing = False
@@ -152,6 +165,15 @@ while run:
                 bpm += 5
             elif bpm_sub_rect.collidepoint(event.pos):
                 bpm -= 5
+            elif beats_add_rect.collidepoint(event.pos):
+                beats += 1
+                for i in range(len(clicked)):
+                    clicked[i].append(-1)
+
+            elif beats_sub_rect.collidepoint(event.pos):
+                beats -= 1
+                for i in range(len(clicked)):
+                    clicked[i].pop(-1)
 
     beat_length = 3600 // bpm
 
