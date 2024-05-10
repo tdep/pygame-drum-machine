@@ -36,6 +36,7 @@ kick = mixer.Sound('sounds/kick.WAV')
 crash = mixer.Sound('sounds/cymbal.wav')
 clap = mixer.Sound('sounds/clap.wav')
 tom = mixer.Sound('sounds/tom.WAV')
+pygame.mixer.set_num_channels(instruments + 3)
 
 
 def play_notes():
@@ -53,6 +54,7 @@ def play_notes():
                 clap.play()
             if i == 5:
                 tom.play()
+
 
 def draw_grid(clicks, beat):
     left_box = pygame.draw.rect(screen, gray, [0, 0, 200, HEIGHT - 200], 5)
